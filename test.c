@@ -17,21 +17,21 @@ int _puts(char *str);
 int _putchar(char c);
 int _printf(const char *format, ...);
 
-
 int printf_char(va_list args)
 {
-	return(_putchar(va_arg(args, int)));
+	return (_putchar(va_arg(args, int)));
 }
 
 int printf_string(va_list args)
 {
-	return(_puts(va_arg(args, char *)));
+	return (_puts(va_arg(args, char *)));
 }
 
 int printf_int(va_list args)
 {
 	int n = va_arg(args, int);
-	if (n < 0) {
+	if (n < 0)
+	{
 		_putchar('-');
 		n = -n;
 	}
@@ -39,16 +39,17 @@ int printf_int(va_list args)
 	if (n == 0)
 		_putchar('0');
 
-	if (n/10)
-		printnumber(n/10);
+	if (n / 10)
+		printnumber(n / 10);
 
-	return(_putchar(n%10 + '0'));
+	return (_putchar(n % 10 + '0'));
 }
 
 int printf_dec(va_list args)
 {
 	int n = va_arg(args, int);
-	if (n < 0) {
+	if (n < 0)
+	{
 		_putchar('-');
 		n = -n;
 	}
@@ -56,16 +57,17 @@ int printf_dec(va_list args)
 	if (n == 0)
 		_putchar('0');
 
-	if (n/10)
-		printnumber(n/10);
+	if (n / 10)
+		printnumber(n / 10);
 
-	return(_putchar(n%10 + '0'));
+	return (_putchar(n % 10 + '0'));
 }
 
 int printnumber(int n)
 {
 
-	if (n < 0) {
+	if (n < 0)
+	{
 		_putchar('-');
 		n = -n;
 	}
@@ -73,10 +75,10 @@ int printnumber(int n)
 	if (n == 0)
 		_putchar('0');
 
-	if (n/10)
-		printnumber(n/10);
+	if (n / 10)
+		printnumber(n / 10);
 
-	return(_putchar(n%10 + '0'));
+	return (_putchar(n % 10 + '0'));
 }
 
 int _puts(char *str)
@@ -102,7 +104,6 @@ int _putchar(char c)
 	return (write(1, &c, 1));
 }
 
-
 int _printf(const char *format, ...)
 {
 	operations_t types[] = {
@@ -110,10 +111,9 @@ int _printf(const char *format, ...)
 		{"s", printf_string},
 		{"i", printf_int},
 		{"d", printf_dec},
-		{NULL, NULL}
-	};
+		{NULL, NULL}};
 
-	int j, i = 0, count =0;
+	int j, i = 0, count = 0;
 
 	va_list args;
 
@@ -121,20 +121,20 @@ int _printf(const char *format, ...)
 
 	while (format && format[i] != '\0')
 	{
-		while( format[i] != '%' && format[i] != '\0')
+		while (format[i] != '%' && format[i] != '\0')
 		{
-		        count += _putchar(format[i]);
-		        i++;
+			count += _putchar(format[i]);
+			i++;
 		}
-		if(format[i] != '\0')
+		if (format[i] != '\0')
 		{
-		        i++;
+			i++;
 		}
-		else 
+		else
 		{
-		        break;
+			break;
 		}
-		if(format[i] == '%')
+		if (format[i] == '%')
 		{
 			count += _putchar('%');
 		}
@@ -142,7 +142,7 @@ int _printf(const char *format, ...)
 		{
 			for (j = 0; types[j].operation; j++)
 			{
-			        if(*(types[j].operation) == format[i])
+				if (*(types[j].operation) == format[i])
 				{
 					count += types[j].f(args);
 				}
@@ -168,22 +168,21 @@ num /= base;
 }while(num != 0); 
 return(ptr); 
 }*/
- 
 
-int main() {
-    
+int main()
+{
+
 	char j = 'n';
 	char *s = "holberton";
 	int i = 0x42451;
 	int len;
-        
+
 	len = _printf("Let's try to printf a simple sentence.\n");
 
 	_printf("prueba _printf\n");
 	_printf("holi\n%%\n%c\n%s\n%dm\n\n", j, s, i);
 	printf("prueba print normal\n");
 	printf("holi\n%%\n%c\n%s\n%dp\n\n", j, s, i);
-
 
 	_printf("Length:[%i]\n", len);
 
