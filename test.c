@@ -12,7 +12,7 @@ Write your code in this editor and press "Run" button to compile and execute it.
 typedef struct operations
 {
 	char *operation;
-	int (*f)(va_list args);
+	void (*f)(va_list args);
 } operations_t;
 
 void printf_char(va_list args);
@@ -20,57 +20,9 @@ void printf_string(va_list args);
 void printf_int(va_list args);
 void printf_dec(va_list args);
 void printnumber(int n);
+void _puts(char *str);
 int _printf(const char *format, ...);
 
-int _printf(const char *format, ...)
-{
-	operations_t types[] = {
-		{"c", printf_char},
-		{"s", printf_string},
-		{"i", printf_int},
-		{"d", printf_dec},
-		{NULL, NULL}
-	};
-
-	int j, i = 0, count = 0;
-
-	va_list args;
-
-	va_start(args, format);
-
-	while (format && format[i] != '\0')
-	{
-		while( format[i] != '%' && format[i] != '\0')
-		{
-		        putchar(format[i]);
-		        i++;
-		}
-		if(format[i] != '\0')
-		{
-		        i++;
-		}
-		else 
-		{
-			break;
-		}
-		if(format[i] == '%')
-		{
-			putchar('%');
-		}
-		else
-		{
-			for (j = 0; types[j].operation; j++)
-			{
-			        if(*(types[j].operation) == format[i])
-				{
-					types[j].f(args);
-					count + 1;
-				}
-			}
-		}
-		i++;
-	}
-}
 
 void printf_char(va_list args)
 {
@@ -144,6 +96,57 @@ void _puts(char *str)
 }
 
 
+int _printf(const char *format, ...)
+{
+	operations_t types[] = {
+		{"c", printf_char},
+		{"s", printf_string},
+		{"i", printf_int},
+		{"d", printf_dec},
+		{NULL, NULL}
+	};
+
+	int j, i = 0;
+
+	va_list args;
+
+	va_start(args, format);
+
+	while (format && format[i] != '\0')
+	{
+		while( format[i] != '%' && format[i] != '\0')
+		{
+		        putchar(format[i]);
+		        i++;
+		}
+		if(format[i] != '\0')
+		{
+		        i++;
+		}
+		else 
+		{
+		        break;
+		}
+		if(format[i] == '%')
+		{
+			putchar('%');
+		}
+		else
+		{
+			for (j = 0; types[j].operation; j++)
+			{
+			        if(*(types[j].operation) == format[i])
+				{
+					types[j].f(args);
+				}
+			}
+		}
+		i++;
+	}
+	va_end(args);
+	return (0);
+}
+
 /*char *digit_num(unsigned int num, int base) 
 { 
 static char Representation[]= "0123456789ABCDEF";
@@ -164,9 +167,23 @@ return(ptr);
  
 
 int main() {
+
+
 	char j = 'n';
 	char *s = "holberton";
 	int i = -3535322;
-	_printf("holi\n%%\n%c\n%s\n%i", j, s, i);
+
+	_printf("prueba _printf\n");
+	_printf("holi\n%%\n%c\n%s\n%im\n\n", j, s, i);
+	printf("prueba print normal\n");
+	printf("holi\n%%\n%c\n%s\n%ip\n\n", j, s, i);
+
+	_printf("test of holberton\n");
+	_printf("Character:[%c]\n", 'H');
+	printf("Character:[%c]\n", 'H');
+	_printf("String:[%s]\n", "I am a string !");
+	printf("String:[%s]\n", "I am a string !");
+	_printf("Percent:[%%]\n");
+	printf("Percent:[%%]\n");
 	return 0;
 }
