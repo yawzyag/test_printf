@@ -49,17 +49,17 @@ int printf_dec(va_list args)
 {
 	int n = va_arg(args, int);
 	if (n < 0) {
-		putchar('-');
+		_putchar('-');
 		n = -n;
 	}
 
 	if (n == 0)
-		putchar('0');
+		_putchar('0');
 
 	if (n/10)
 		printnumber(n/10);
 
-	return(putchar(n%10 + '0'));
+	return(_putchar(n%10 + '0'));
 }
 
 int printnumber(int n)
@@ -174,15 +174,15 @@ int main() {
     
 	char j = 'n';
 	char *s = "holberton";
-	int i = -3535322;
+	int i = 0x42451;
 	int len;
         
 	len = _printf("Let's try to printf a simple sentence.\n");
-        
+
 	_printf("prueba _printf\n");
-	_printf("holi\n%%\n%c\n%s\n%im\n\n", j, s, i);
+	_printf("holi\n%%\n%c\n%s\n%dm\n\n", j, s, i);
 	printf("prueba print normal\n");
-	printf("holi\n%%\n%c\n%s\n%ip\n\n", j, s, i);
+	printf("holi\n%%\n%c\n%s\n%dp\n\n", j, s, i);
 
 
 	_printf("Length:[%i]\n", len);
