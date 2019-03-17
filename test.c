@@ -1,40 +1,51 @@
-/******************************************************************************
-
-                            Online C Compiler.
-                Code, Compile, Run and Debug C program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
-
 #include <stdio.h>
 #include <stdarg.h>
+#include <unistd.h>
 
 typedef struct operations
 {
 	char *operation;
-	void (*f)(va_list args);
+	int (*f)(va_list args);
 } operations_t;
 
-void printf_char(va_list args);
-void printf_string(va_list args);
-void printf_int(va_list args);
-void printf_dec(va_list args);
-void printnumber(int n);
-void _puts(char *str);
+int printf_char(va_list args);
+int printf_string(va_list args);
+int printf_int(va_list args);
+int printf_dec(va_list args);
+int printnumber(int n);
+int _puts(char *str);
+int _putchar(char c);
 int _printf(const char *format, ...);
 
 
-void printf_char(va_list args)
+int printf_char(va_list args)
 {
-	putchar(va_arg(args, int));
+	return(_putchar(va_arg(args, int)));
 }
 
-void printf_string(va_list args)
+int printf_string(va_list args)
 {
-	_puts(va_arg(args, char *));
+	return(_puts(va_arg(args, char *)));
 }
 
-void printf_int(va_list args)
+int printf_int(va_list args)
+{
+	int n = va_arg(args, int);
+	if (n < 0) {
+		_putchar('-');
+		n = -n;
+	}
+
+	if (n == 0)
+		_putchar('0');
+
+	if (n/10)
+		printnumber(n/10);
+
+	return(_putchar(n%10 + '0'));
+}
+
+int printf_dec(va_list args)
 {
 	int n = va_arg(args, int);
 	if (n < 0) {
@@ -48,51 +59,47 @@ void printf_int(va_list args)
 	if (n/10)
 		printnumber(n/10);
 
-	putchar(n%10 + '0');
+	return(putchar(n%10 + '0'));
 }
 
-void printf_dec(va_list args)
+int printnumber(int n)
 {
-	int n = va_arg(args, int);
+
 	if (n < 0) {
-		putchar('-');
+		_putchar('-');
 		n = -n;
 	}
 
 	if (n == 0)
-		putchar('0');
+		_putchar('0');
 
 	if (n/10)
 		printnumber(n/10);
 
-	putchar(n%10 + '0');
+	return(_putchar(n%10 + '0'));
 }
 
-void printnumber(int n)
-{
-
-	if (n < 0) {
-		putchar('-');
-		n = -n;
-	}
-
-	if (n == 0)
-		putchar('0');
-
-	if (n/10)
-		printnumber(n/10);
-
-	putchar(n%10 + '0');
-}
-
-void _puts(char *str)
+int _puts(char *str)
 {
 	int i;
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
-		putchar(str[i]);
+		_putchar(str[i]);
 	}
+	return (i);
+}
+
+/**
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int _putchar(char c)
+{
+	return (write(1, &c, 1));
 }
 
 
@@ -106,7 +113,7 @@ int _printf(const char *format, ...)
 		{NULL, NULL}
 	};
 
-	int j, i = 0;
+	int j, i = 0, count =0;
 
 	va_list args;
 
@@ -116,7 +123,7 @@ int _printf(const char *format, ...)
 	{
 		while( format[i] != '%' && format[i] != '\0')
 		{
-		        putchar(format[i]);
+		        count += _putchar(format[i]);
 		        i++;
 		}
 		if(format[i] != '\0')
@@ -129,7 +136,7 @@ int _printf(const char *format, ...)
 		}
 		if(format[i] == '%')
 		{
-			putchar('%');
+			count += _putchar('%');
 		}
 		else
 		{
@@ -137,14 +144,14 @@ int _printf(const char *format, ...)
 			{
 			        if(*(types[j].operation) == format[i])
 				{
-					types[j].f(args);
+					count += types[j].f(args);
 				}
 			}
 		}
 		i++;
 	}
 	va_end(args);
-	return (0);
+	return (count);
 }
 
 /*char *digit_num(unsigned int num, int base) 
@@ -152,38 +159,39 @@ int _printf(const char *format, ...)
 static char Representation[]= "0123456789ABCDEF";
 static char buffer[50]; 
 char *ptr; 
-
 ptr = &buffer[49]; 
 *ptr = '\0'; 
-
 do 
 { 
 *--ptr = Representation[num%base]; 
 num /= base; 
 }while(num != 0); 
-
 return(ptr); 
 }*/
  
 
 int main() {
-
-
+    
 	char j = 'n';
 	char *s = "holberton";
 	int i = -3535322;
-
+	int len;
+        
+	len = _printf("Let's try to printf a simple sentence.\n");
+        
 	_printf("prueba _printf\n");
 	_printf("holi\n%%\n%c\n%s\n%im\n\n", j, s, i);
 	printf("prueba print normal\n");
 	printf("holi\n%%\n%c\n%s\n%ip\n\n", j, s, i);
+
+
+	_printf("Length:[%i]\n", len);
 
 	_printf("test of holberton\n");
 	_printf("Character:[%c]\n", 'H');
 	printf("Character:[%c]\n", 'H');
 	_printf("String:[%s]\n", "I am a string !");
 	printf("String:[%s]\n", "I am a string !");
-	_printf("Percent:[%%]\n");
-	printf("Percent:[%%]\n");
+
 	return 0;
 }
