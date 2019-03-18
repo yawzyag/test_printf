@@ -15,15 +15,17 @@ int _printf(const char *format, ...)
 		{"d", printf_dec},
 		{NULL, NULL}};
 
-	int j, i = 0, count = 0;
+	int j, i = 0, counter = 0;
 	va_list args;
 
 	va_start(args, format);
+	if(format == NULL)
+		return (-1);
 	while (format && format[i] != '\0')
 	{
 		while (format[i] != '%' && format[i] != '\0')
 		{
-			count += _putchar(format[i]);
+			counter += _putchar(format[i]);
 			i++;
 		}
 		if (format[i] != '\0')
@@ -31,17 +33,17 @@ int _printf(const char *format, ...)
 		else
 			break;
 		if (format[i] == '%')
-			count += _putchar('%');
+			counter += _putchar('%');
 		else
 		{
 			for (j = 0; types[j].operation; j++)
 			{
 				if (*(types[j].operation) == format[i])
-					count += types[j].f(args);
+					counter += types[j].f(args);
 			}
 		}
 		i++;
 	}
 	va_end(args);
-	return (count);
+	return (counter);
 }
