@@ -1,5 +1,11 @@
 #include "holberton.h"
 
+/**
+ * _printf - printf function
+ * @format: format arguments to print
+ *
+ * Return: number of characters printed
+*/
 int _printf(const char *format, ...)
 {
 	operations_t types[] = {
@@ -10,10 +16,9 @@ int _printf(const char *format, ...)
 		{NULL, NULL}};
 
 	int j, i = 0, count = 0;
-
 	va_list args;
-	va_start(args, format);
 
+	va_start(args, format);
 	while (format && format[i] != '\0')
 	{
 		while (format[i] != '%' && format[i] != '\0')
@@ -40,18 +45,3 @@ int _printf(const char *format, ...)
 	va_end(args);
 	return (count);
 }
-
-/*char *digit_num(unsigned int num, int base) 
-{ 
-static char Representation[]= "0123456789ABCDEF";
-static char buffer[50]; 
-char *ptr; 
-ptr = &buffer[49]; 
-*ptr = '\0'; 
-do 
-{ 
-*--ptr = Representation[num%base]; 
-num /= base; 
-}while(num != 0); 
-return(ptr); 
-}*/

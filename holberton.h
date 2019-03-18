@@ -25,4 +25,4 @@ int printnumber(int n);
 int _puts(char *str);
 int _putchar(char c);
 int _printf(const char *format, ...);
-#endif /* HOLBERTON_H */
+#endif/* HOLBERTON_H */

@@ -1,5 +1,11 @@
 #include "holberton.h"
 
+/**
+ * _puts - print string
+ * @str: string
+ *
+ * Return: number of ocurency
+ */
 int _puts(char *str)
 {
 	int i;

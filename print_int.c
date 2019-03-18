@@ -1,8 +1,15 @@
 #include "holberton.h"
 
+/**
+ * printf_int - print numbers
+ * @args: argumentos
+ *
+ * Return: int printed
+ */
 int printf_int(va_list args)
 {
 	int n = va_arg(args, int);
+
 	if (n < 0)
 	{
 		_putchar('-');

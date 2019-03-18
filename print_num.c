@@ -1,5 +1,11 @@
 #include "holberton.h"
 
+/**
+ * printnumber - function to print digit
+ * @n: num
+ *
+ * Return: void
+ */
 int printnumber(int n)
 {
 
