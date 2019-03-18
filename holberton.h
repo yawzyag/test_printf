@@ -22,6 +22,8 @@ int printf_string(va_list args);
 int printf_int(va_list args);
 int printf_dec(va_list args);
 int printnumber(int n);
+int printf_oct(va_list args);
+int printnumberoctal(unsigned int n);
 int _puts(char *str);
 int _putchar(char c);
 int _printf(const char *format, ...);

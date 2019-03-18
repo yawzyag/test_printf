@@ -1,4 +1,5 @@
 #include "holberton.h"
+#include <limits.h>
 
 int main()
 {
@@ -7,8 +8,10 @@ int main()
 	char *s = "holberton";
 	int i = 0x42451;
 	int len;
+	unsigned int ui;
 
 	len = _printf("Let's try to printf a simple sentence.\n");
+	ui = (unsigned int)INT_MAX + 1024;
 
 	_printf("prueba _printf\n");
 	_printf("holi\n%%\n%c\n%s\n%dm\n\n", j, s, i);
@@ -22,6 +25,10 @@ int main()
 	printf("Character:[%c]\n", 'H');
 	_printf("String:[%s]\n", "I am a string !");
 	printf("String:[%s]\n", "I am a string !");
+	_printf("%%%%r%%%%%%\n");
+	printf("%%%%r%%%%%%\n");
+	_printf("Unsigned octal:[%o]\n", ui);
+    printf("Unsigned octal:[%o]\n", ui);
 
 	return 0;
 }

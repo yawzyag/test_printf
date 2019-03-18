@@ -13,6 +13,7 @@ int _printf(const char *format, ...)
 		{"s", printf_string},
 		{"i", printf_int},
 		{"d", printf_dec},
+		{"o", printf_oct},
 		{NULL, NULL}};
 
 	int j, i = 0, counter = 0;
